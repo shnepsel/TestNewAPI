@@ -90,19 +90,19 @@ crow::response add_client(pqxx::connection& C, const json& client_data) {
 }
 
 // --- DELETE: Логическое удаление клиента ---
-crow::response delete_client(pqxx::connection& C, int client_id) {
-    try {
-        pqxx::work W(C);
+// crow::response delete_client(pqxx::connection& C, int client_id) {
+//     try {
+//         pqxx::work W(C);
 
-        W.exec_prepared("delete_client", client_id);
-        W.commit();
+//         W.exec_prepared("delete_client", client_id);
+//         W.commit();
 
-        return crow::response(200, "Клиент успешно удалён.");
-    } catch (const std::exception& e) {
-        std::cerr << "Ошибка при удалении клиента: " << e.what() << std::endl;
-        return crow::response(500, "Ошибка на сервере.");
-    }
-}
+//         return crow::response(200, "Клиент успешно удалён.");
+//     } catch (const std::exception& e) {
+//         std::cerr << "Ошибка при удалении клиента: " << e.what() << std::endl;
+//         return crow::response(500, "Ошибка на сервере.");
+//     }
+// }
 
 // --- GET: Получение всех контрактов ---
 json get_contracts(pqxx::connection& C) {
@@ -183,19 +183,19 @@ crow::response add_contract(pqxx::connection& C, const json& contract_data) {
 }
 
 // --- DELETE: Логическое удаление контракта ---
-crow::response delete_contract(pqxx::connection& C, int contract_id) {
-    try {
-        pqxx::work W(C);
+// crow::response delete_contract(pqxx::connection& C, int contract_id) {
+//     try {
+//         pqxx::work W(C);
 
-        W.exec_prepared("delete_contract", contract_id);
-        W.commit();
+//         W.exec_prepared("delete_contract", contract_id);
+//         W.commit();
 
-        return crow::response(200, "Контракт успешно удалён.");
-    } catch (const std::exception& e) {
-        std::cerr << "Ошибка при удалении контракта: " << e.what() << std::endl;
-        return crow::response(500, "Ошибка на сервере.");
-    }
-}
+//         return crow::response(200, "Контракт успешно удалён.");
+//     } catch (const std::exception& e) {
+//         std::cerr << "Ошибка при удалении контракта: " << e.what() << std::endl;
+//         return crow::response(500, "Ошибка на сервере.");
+//     }
+// }
 
 int main() {
     crow::SimpleApp app;
