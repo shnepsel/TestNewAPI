@@ -226,11 +226,11 @@ int main() {
     // Подготовка SQL-запросов
     C.prepare("insert_clients", "INSERT INTO clients (client_name, phone_number) VALUES ($1, $2)");
     C.prepare("select_client_by_id", "SELECT * FROM clients WHERE client_id = $1");
-    C.prepare("delete_client", "UPDATE clients SET is_deleted = TRUE WHERE client_id = $1");
+    //C.prepare("delete_client", "UPDATE clients SET is_deleted = TRUE WHERE client_id = $1");
 
     C.prepare("insert_contract", "INSERT INTO contracts (client_id, contract_details, start_date, end_date) VALUES ($1, $2, $3, $4)");
     C.prepare("select_contract_by_id", "SELECT * FROM contracts WHERE contract_id = $1");
-    C.prepare("delete_contract", "UPDATE contracts SET is_deleted = TRUE WHERE contract_id = $1");
+    //C.prepare("delete_contract", "UPDATE contracts SET is_deleted = TRUE WHERE contract_id = $1");
 
     // Маршруты
     CROW_ROUTE(app, "/")([]() {
@@ -279,13 +279,13 @@ int main() {
         }
     });
 
-    CROW_ROUTE(app, "/delete/Client/<int>").methods(crow::HTTPMethod::DELETE)([&C](int client_id) {
-        return delete_client(C, client_id);
-    });
+    // CROW_ROUTE(app, "/delete/Client/<int>").methods(crow::HTTPMethod::DELETE)([&C](int client_id) {
+    //     return delete_client(C, client_id);
+    // });
 
-    CROW_ROUTE(app, "/delete/Contract/<int>").methods(crow::HTTPMethod::DELETE)([&C](int contract_id) {
-        return delete_contract(C, contract_id);
-    });
+    // CROW_ROUTE(app, "/delete/Contract/<int>").methods(crow::HTTPMethod::DELETE)([&C](int contract_id) {
+    //     return delete_contract(C, contract_id);
+    // });
 
     app.port(8080).multithreaded().run();
 }
