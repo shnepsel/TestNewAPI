@@ -1,7 +1,8 @@
 CREATE TABLE clients (
     client_id SERIAL PRIMARY KEY,      
     client_name VARCHAR(255) NOT NULL, 
-    phone_number VARCHAR(20) NOT NULL   
+    phone_number VARCHAR(20) NOT NULL,
+    is_deleted BOOLEAN DEFAULT FALSE
 );
 
 INSERT INTO clients (client_name, phone_number) VALUES
@@ -24,7 +25,8 @@ CREATE TABLE contracts (
     product_type_id INT,
     start_date DATE,
     end_date DATE,
-    contract_amount DECIMAL(10, 2)
+    contract_amount DECIMAL(10, 2),
+    is_deleted BOOLEAN DEFAULT FALSE
 );
 
 INSERT INTO contracts (id, client_id, description, product_type_id, start_date, end_date, contract_amount) VALUES
