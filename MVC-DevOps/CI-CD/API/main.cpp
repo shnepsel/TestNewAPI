@@ -90,19 +90,19 @@ crow::response add_client(pqxx::connection& C, const json& client_data) {
 }
 
 // --- DELETE: Логическое удаление клиента ---
-// crow::response delete_client(pqxx::connection& C, int client_id) {
-//     try {
-//         pqxx::work W(C);
+crow::response delete_client(pqxx::connection& C, int client_id) {
+    try {
+        pqxx::work W(C);
 
-//         W.exec_prepared("delete_client", client_id);
-//         W.commit();
+        W.exec_prepared("delete_client", client_id);
+        W.commit();
 
-//         return crow::response(200, "Клиент успешно удалён.");
-//     } catch (const std::exception& e) {
-//         std::cerr << "Ошибка при удалении клиента: " << e.what() << std::endl;
-//         return crow::response(500, "Ошибка на сервере.");
-//     }
-// }
+        return crow::response(200, "Клиент успешно удалён.");
+    } catch (const std::exception& e) {
+        std::cerr << "Ошибка при удалении клиента: " << e.what() << std::endl;
+        return crow::response(500, "Ошибка на сервере.");
+    }
+}
 
 // --- GET: Получение всех контрактов ---
 json get_contracts(pqxx::connection& C) {
@@ -183,19 +183,19 @@ crow::response add_contract(pqxx::connection& C, const json& contract_data) {
 }
 
 // --- DELETE: Логическое удаление контракта ---
-// crow::response delete_contract(pqxx::connection& C, int contract_id) {
-//     try {
-//         pqxx::work W(C);
+crow::response delete_contract(pqxx::connection& C, int contract_id) {
+    try {
+        pqxx::work W(C);
 
-//         W.exec_prepared("delete_contract", contract_id);
-//         W.commit();
+        W.exec_prepared("delete_contract", contract_id);
+        W.commit();
 
-//         return crow::response(200, "Контракт успешно удалён.");
-//     } catch (const std::exception& e) {
-//         std::cerr << "Ошибка при удалении контракта: " << e.what() << std::endl;
-//         return crow::response(500, "Ошибка на сервере.");
-//     }
-// }
+        return crow::response(200, "Контракт успешно удалён.");
+    } catch (const std::exception& e) {
+        std::cerr << "Ошибка при удалении контракта: " << e.what() << std::endl;
+        return crow::response(500, "Ошибка на сервере.");
+    }
+}
 
 int main() {
     crow::SimpleApp app;
@@ -226,11 +226,11 @@ int main() {
     // Подготовка SQL-запросов
     C.prepare("insert_clients", "INSERT INTO clients (client_name, phone_number) VALUES ($1, $2)");
     C.prepare("select_client_by_id", "SELECT * FROM clients WHERE client_id = $1");
-    //C.prepare("delete_client", "UPDATE clients SET is_deleted = TRUE WHERE client_id = $1");
+    C.prepare("delete_client", "UPDATE clients SET is_deleted = TRUE WHERE client_id = $1");
 
     C.prepare("insert_contract", "INSERT INTO contracts (client_id, contract_details, start_date, end_date) VALUES ($1, $2, $3, $4)");
     C.prepare("select_contract_by_id", "SELECT * FROM contracts WHERE contract_id = $1");
-    //C.prepare("delete_contract", "UPDATE contracts SET is_deleted = TRUE WHERE contract_id = $1");
+    C.prepare("delete_contract", "UPDATE contracts SET is_deleted = TRUE WHERE contract_id = $1");
 
     // Маршруты
     CROW_ROUTE(app, "/")([]() {
@@ -279,13 +279,13 @@ int main() {
         }
     });
 
-    // CROW_ROUTE(app, "/delete/Client/<int>").methods(crow::HTTPMethod::DELETE)([&C](int client_id) {
-    //     return delete_client(C, client_id);
-    // });
+    CROW_ROUTE(app, "/delete/Client/<int>").methods(crow::HTTPMethod::DELETE)([&C](int client_id) {
+        return delete_client(C, client_id);
+    });
 
-    // CROW_ROUTE(app, "/delete/Contract/<int>").methods(crow::HTTPMethod::DELETE)([&C](int contract_id) {
-    //     return delete_contract(C, contract_id);
-    // });
+    CROW_ROUTE(app, "/delete/Contract/<int>").methods(crow::HTTPMethod::DELETE)([&C](int contract_id) {
+        return delete_contract(C, contract_id);
+    });
 
     app.port(8080).multithreaded().run();
 }
