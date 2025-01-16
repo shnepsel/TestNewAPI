@@ -118,7 +118,8 @@ json get_contracts(pqxx::connection& C) {
                 {"client_id", row["client_id"].as<int>()},
                 {"contract_details", row["contract_details"].as<std::string>()},
                 {"start_date", row["start_date"].as<std::string>()},
-                {"end_date", row["end_date"].as<std::string>()}
+                {"end_date", row["end_date"].as<std::string>()},
+                {"contract_amount", row["contract_amount"].as<double>()}
             });
         }
         W.commit();
@@ -147,7 +148,8 @@ json get_contract_by_id(pqxx::connection& C, int contract_id) {
             {"client_id", row["client_id"].as<int>()},
             {"contract_details", row["contract_details"].as<std::string>()},
             {"start_date", row["start_date"].as<std::string>()},
-            {"end_date", row["end_date"].as<std::string>()}
+            {"end_date", row["end_date"].as<std::string>()},
+            {"contract_amount", row["contract_amount"].as<double>()}
         };
 
         W.commit();
