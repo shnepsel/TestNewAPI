@@ -26,6 +26,6 @@ INSERT INTO clients (client_name, phone_number) VALUES
 
 -- Вставка начальных данных в таблицу contracts
 INSERT INTO contracts (client_id, contract_details, start_date, end_date, contract_amount) VALUES
-(1, 'Contract', '2023-01-01', '2023-12-31', 5000.00),
-(2, 'Contract', '2023-02-01', '2023-11-30', 10000.00),
-(3, 'Contract', '2023-03-01', '2023-10-31', 120000.00);
+(1, 'Credits', '2023-01-01', '2023-12-31', 5000.00),
+(2, 'Debts', '2023-02-01', '2023-11-30', 10000.00),
+(3, 'Cards', '2023-03-01', '2023-10-31', 120000.00);
