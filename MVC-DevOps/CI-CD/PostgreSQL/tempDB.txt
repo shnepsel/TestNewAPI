@@ -13,6 +13,7 @@ CREATE TABLE contracts (
     contract_details TEXT NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
+    contract_amount DECIMAL(10, 2),
     is_deleted BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (client_id) REFERENCES clients(client_id)
 );
@@ -24,7 +25,7 @@ INSERT INTO clients (client_name, phone_number) VALUES
 ('Alice Johnson', '555-555-5555');
 
 -- Вставка начальных данных в таблицу contracts
-INSERT INTO contracts (client_id, contract_details, start_date, end_date) VALUES
-(1, 'Contract details for John Doe', '2023-01-01', '2023-12-31'),
-(2, 'Contract details for Jane Smith', '2023-02-01', '2023-11-30'),
-(3, 'Contract details for Alice Johnson', '2023-03-01', '2023-10-31');
+INSERT INTO contracts (client_id, contract_details, start_date, end_date, contract_amount) VALUES
+(1, 'Contract details for John Doe', '2023-01-01', '2023-12-31', 5000.00),
+(2, 'Contract details for Jane Smith', '2023-02-01', '2023-11-30'. 10000.00),
+(3, 'Contract details for Alice Johnson', '2023-03-01', '2023-10-31', 120000.00);
