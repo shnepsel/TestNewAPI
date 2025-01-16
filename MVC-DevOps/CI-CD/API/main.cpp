@@ -215,12 +215,9 @@ int main() {
                            " user=" + db_config["user"].get<std::string>() +
                            " password=" + db_config["password"].get<std::string>();
 
-    pqxx::connection C;
-    try {
-        C = pqxx::connection(conn_str);
-    } catch (const std::exception& e) {
-        std::cerr << "Ошибка подключения к базе данных: " << e.what() << std::endl;
-        return 1;
+    pqxx::connection C(conn_str);
+    if (!C.is_open()) {
+            throw std::runtime_error("Не удалось открыть соединение с базой данных.");
     }
 
     // Подготовка SQL-запросов
